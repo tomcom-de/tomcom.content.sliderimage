@@ -19,7 +19,8 @@ from zope.interface import Interface
 ##code-section module-header #fill in your manual code here
 from Products.ATContentTypes.content.image import ATImage
 from Products.CMFPlone import PloneMessageFactory as _
-
+from plone.app.blob.content import ATBlob
+from plone.i18n.normalizer.interfaces import IUserPreferredFileNameNormalizer
 ##/code-section module-header
 
 from config import *
@@ -53,7 +54,7 @@ schema = Schema((
 ##code-section after-local-schema #fill in your manual code here
 ##/code-section after-local-schema
 
-SliderImage_schema = ATImage.schema.copy() + \
+SliderImage_schema = ATBlob.schema.copy() + \
     schema.copy()
 
 ##code-section after-schema #fill in your manual code here
@@ -68,7 +69,7 @@ class ISliderImage(Interface):
     """Marker interface
     """
 
-class SliderImage(ATImage):
+class SliderImage(ATBlob):
     """
     """
     security = ClassSecurityInfo()
@@ -77,13 +78,22 @@ class SliderImage(ATImage):
 
     meta_type = 'SliderImage'
     _at_rename_after_creation = True
-
     schema = SliderImage_schema
 
     ##code-section class-header #fill in your manual code here
     ##/code-section class-header
 
     # Methods
+    def _should_set_id_to_filename(self, filename, title):
+        form=self.REQUEST.form
+        if filename:
+            form.update({'title':filename})
+            normalize=self.getAdapter('normalize')
+            id = normalize(filename)
+            if id!=self.getId():
+                form.update({'id':id})
+        return True
+
 
 registerType(SliderImage, PROJECTNAME)
 

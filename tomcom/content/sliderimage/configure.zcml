@@ -3,12 +3,27 @@
            xmlns:five="http://namespaces.zope.org/five"
            xmlns:i18n="http://namespaces.zope.org/i18n"
            xmlns:plone="http://namespaces.plone.org/plone"
+           xmlns:objectcache="http://www.tomcom.de/objectcache"
            xmlns:pt="http://namespaces.plone.org/pt"
            i18n_domain="plone">
 
     <includeDependencies package="." />
 
     <i18n:registerTranslations directory="locales" />
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <class class=".sliderimage.SliderImage">
+        <implements interface="tomcom.objectcache.interfaces.IObjectCache" />
+        <implements interface="plone.app.blob.interfaces.IATBlobImage" />
+        <implements interface="Products.ATContentTypes.interface.IATImage" />
+        <implements interface="Products.ATContentTypes.interface.IImageContent" />
+        <implements interface="plone.app.blob.interfaces.IATBlobImage" />
+    </class>
+
+    <objectcache:objectcache
+        class=".sliderimage.SliderImage"
+        fields="title description text" />
+
 
     <!-- ##Static resource -->
     <include package="plone.resource" file="meta.zcml"/>
@@ -19,7 +34,5 @@
     <!-- /##Static resource -->
 
     <include file="profiles.zcml" />
-
-    <five:registerPackage package="." initialize=".initialize" />
 
 </configure>

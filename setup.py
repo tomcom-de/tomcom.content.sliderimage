@@ -28,6 +28,7 @@ setup(name='tomcom.content.sliderimage',
       include_package_data=True,
       install_requires=[
         'setuptools',
+        'tomcom.objectcache',
       ],
       tests_require=tests_require,
       extras_require=dict(tests=tests_require,
