@@ -34,7 +34,7 @@ schema = Schema((
         #validators=('isTidyHtml',),
         default_output_type='text/x-html-safe',
         widget=RichWidget(
-            description='',
+            description='Der Text muss immer mit einem H1 umgeben sein (Text markieren -> "Format-Dropdown" -> H1); Für Umbrüche nur weiche Umbrüche benutzen(Shift+Enter)',
             label=_(u'label_body_text', default=u'Body Text'),
             rows=15,
             allow_file_upload=False
@@ -47,7 +47,24 @@ schema = Schema((
             label=_(u'label_external_link', default=u'External link')
         ),
     ),
-
+    BooleanField(
+        name='checkheadlinebackground',
+        widget=BooleanWidget(
+            format='checkbox',
+            label='Banner Text Hintergrund',
+            description = 'Soll die Überschrift einen transparenten Hintergrund haben?',
+        ),
+    ),
+    StringField(
+        required=True,
+        name='banner_text_position',
+        vocabulary_expr="""content_instance.getAdapter('portal')().getBrowser('easyvoc').get('banner-text-position')""",
+        widget=SelectionWidget(
+            label='Banner Text Position',
+            description = 'Wie soll der Banner Text positioniert werden?',
+            i18n_domain='plone',
+        ),
+    ),
 ),
 )
 

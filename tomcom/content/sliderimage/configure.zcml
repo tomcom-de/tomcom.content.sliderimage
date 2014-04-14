@@ -22,7 +22,7 @@
 
     <objectcache:objectcache
         class=".sliderimage.SliderImage"
-        fields="title description text" />
+        fields="title description text checkheadlinebackground banner_text_position" />
 
 
     <!-- ##Static resource -->

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '4.3.0.1'
+version = '4.3.0.2'
 
 tests_require = [
     'plone.app.testing',
@@ -14,7 +14,6 @@ setup(name='tomcom.content.sliderimage',
                        open('CHANGES.rst').read(),
       classifiers=[
         'Framework :: Plone',
-        'Framework :: Plone :: 4.3',
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules',
         ],
